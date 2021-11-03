@@ -39,7 +39,7 @@ stages:
       displayName: 'Copy Files to artifact staging directory'
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/*.?(war|jar)'
+        Contents: '**'
         TargetFolder: $(Build.ArtifactStagingDirectory)
 
     - upload: $(Build.ArtifactStagingDirectory)
@@ -47,10 +47,12 @@ stages:
     
     - task: Docker@2
       inputs:
-        containerRegistry: ${{ variables.acrname }}
-        repository: ${{ variables.acrrepo }}
+        containerRegistry: devopsDemo85 
+        repository: Demo85
         command: 'buildAndPush'
         Dockerfile: 'Dockerfile'
+
+
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
